@@ -1,0 +1,49 @@
+= Spring Boot Backend Sample
+
+== Requirements
+
+MySQL:::
+Create two databases, *development* and *test*.
+The database must be running on `localhost:3306`.
+The database username is `root` the password is `''` (empty) by default.
+
+Flyway:::
+Create or edit your Maven `settings.xml` (at `$HOME/.m2/settings.xml` or `%USERPROFILE%\.m2\settings.xml`) according to the `link:settings.sample.xml[]` in the root of this repository.
+
+== Profiles
+
+The roject relies on Maven profiles for development and Spring profiles for execution.
+
+=== Maven
+
+There are two profiles: *development* and *test*.
+
+IMPORTANT: Define profiles *_only_* in `~/.m2/settings.xml`.
+
+When running `flyway:clean` or similar select the right profile so that the plugin could select the right database.
+
+`./mvnw flyway:clean -Pdevelopment` or `./mvnw flyway:clean -Ptest`
+
+=== Spring
+
+There are two Spring profiles: *development* and *local*.
+
+During development, when starting the `Application` class (from your IDE) specify `-Dspring.profiles.active=development,local` to enable the profiles.
+
+When starting the app through Maven either use the `-Dspring-boot.run.profiles=development,local` flag or use the *development* Maven flag because it sets this property by default (this will activate _both_ Spring profiles, not just the developement).
+
+To start the app in development mode
+
+`./mvnw spring-boot:run -Pdevelopment`
+
+To run the tests
+
+`./mvnw test -Ptest`
+
+The *local* profile should be used to configure specific things related to a particular development machine.
+For example if you use a different database port or username/password combination set these in the `application-local.properties`.
+
+Properties in the local profile will take precedence over the development profile. This enables you to override default properties when needed.
+
+IMPORTANT: *This file shouldn't be checked into version control.*
+Also, make sure to rename `link:src/main/resources/application-local.sample.properties[application-local.sample.properties]` to `application-local.properties`, otherwise it won't be picked up by Spring.

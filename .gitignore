@@ -1,0 +1,6 @@
+.idea
+target
+*.iml
+*.swp
+settings.xml
+src/main/resources/application-local.properties
