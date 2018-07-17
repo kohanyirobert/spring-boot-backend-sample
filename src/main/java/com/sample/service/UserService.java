@@ -55,8 +55,7 @@ public class UserService {
             throw new IllegalArgumentException();
         }
 
-        String encodedOldPassword = passwordEncoder.encode(oldPassword);
         String encodedNewPassword = passwordEncoder.encode(newPassword);
-        userDetailsManager.changePassword(encodedOldPassword, encodedNewPassword);
+        userDetailsManager.changePassword(oldPassword, encodedNewPassword);
     }
 }
