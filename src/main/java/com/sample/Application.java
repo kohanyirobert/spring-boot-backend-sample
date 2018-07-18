@@ -22,7 +22,8 @@ import javax.sql.DataSource;
 @SpringBootApplication
 public class Application extends WebSecurityConfigurerAdapter {
 
-    // Allows authentication through the /auth endpoint using GET requests exclusively.
+    // Allows authentication through the /auth endpoint using GET requests exclusively
+    // using HTTP basic authentication. With this configuration no other endpoint allows this.
     @Configuration
     @Order(1)
     public static class AuthConfig extends WebSecurityConfigurerAdapter {
@@ -38,7 +39,8 @@ public class Application extends WebSecurityConfigurerAdapter {
         }
     }
 
-    // Only allows access with an already authenticated session.
+    // Configurations access to the API endpoints which require authenticated sessions (i.e. /users)
+    // and for some that doesn't requires authentication at all (i.e. /register).
     @Configuration
     @Order(2)
     public static class ApiConfig extends WebSecurityConfigurerAdapter {
@@ -46,8 +48,8 @@ public class Application extends WebSecurityConfigurerAdapter {
         protected void configure(HttpSecurity http) throws Exception {
             http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
             http.authorizeRequests()
-                .anyRequest()
-                .authenticated();
+                .antMatchers(HttpMethod.POST, "/register").permitAll()
+                .anyRequest().authenticated();
         }
     }
 
