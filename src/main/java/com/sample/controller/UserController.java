@@ -41,6 +41,14 @@ public class UserController {
         userService.changePassword(oldPassword, newPassword, confirmationPassword);
     }
 
+    @PostMapping("/{userId}/change-username")
+    public void changePassword(
+        @PathVariable("userId") Integer userId,
+        @RequestBody Map<String, String> map) {
+        String newUsername = map.get("newUsername");
+        userService.changeUsername(userId, newUsername);
+    }
+
     @DeleteMapping("/{id}")
     public void delete(@PathVariable("id") Integer id) {
         userService.delete(id);
