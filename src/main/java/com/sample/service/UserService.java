@@ -4,12 +4,8 @@ import com.sample.domain.User;
 import com.sample.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.UserDetailsManager;
-import org.springframework.session.FindByIndexNameSessionRepository;
-import org.springframework.session.Session;
-import org.springframework.session.security.SpringSessionBackedSessionRegistry;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,10 +24,7 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private FindByIndexNameSessionRepository<? extends Session> sessionRepository;
-
-    @Autowired
-    private SpringSessionBackedSessionRegistry<? extends Session> sessionRegistry;
+    private SessionService sessionService;
 
     public Iterable<User> getAll() {
         return userRepository.findAll();
@@ -73,9 +66,8 @@ public class UserService {
     @Transactional
     public void changeUsername(Integer userId, String newUsername) {
         User user = userRepository.findById(userId).orElseThrow();
-        UserDetails userDetails = userDetailsManager.loadUserByUsername(user.getUsername());
-        sessionRegistry.getAllSessions(userDetails, true)
-            .forEach(s -> sessionRepository.deleteById(s.getSessionId()));
+        String oldUsername = user.getUsername();
         user.setUsername(newUsername);
+        sessionService.delete(oldUsername);
     }
 }
