@@ -9,6 +9,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -23,6 +24,7 @@ import org.springframework.session.security.SpringSessionBackedSessionRegistry;
 import javax.sql.DataSource;
 
 @SpringBootApplication
+@EnableGlobalMethodSecurity(securedEnabled = true)
 public class Application extends WebSecurityConfigurerAdapter {
 
     // Allows authentication through the /auth endpoint using GET requests exclusively

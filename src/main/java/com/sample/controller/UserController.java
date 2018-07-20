@@ -3,6 +3,7 @@ package com.sample.controller;
 import com.sample.domain.User;
 import com.sample.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -15,16 +16,19 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Secured("ROLE_ADMIN")
     @GetMapping("")
     public Iterable<User> getAll() {
         return userService.getAll();
     }
 
+    @Secured("ROLE_ADMIN")
     @GetMapping("/{id}")
     public Optional<User> get(@PathVariable("id") Integer id) {
         return userService.get(id);
     }
 
+    @Secured("ROLE_ADMIN")
     @PostMapping("")
     public User add(@RequestBody Map<String, String> map) {
         String username = map.get("username");
@@ -41,6 +45,7 @@ public class UserController {
         userService.changePassword(oldPassword, newPassword, confirmationPassword);
     }
 
+    @Secured("ROLE_ADMIN")
     @PostMapping("/{userId}/change-username")
     public void changePassword(
         @PathVariable("userId") Integer userId,
@@ -49,6 +54,7 @@ public class UserController {
         userService.changeUsername(userId, newUsername);
     }
 
+    @Secured("ROLE_ADMIN")
     @DeleteMapping("/{id}")
     public void delete(@PathVariable("id") Integer id) {
         userService.delete(id);
