@@ -1,5 +1,6 @@
 package com.sample.service;
 
+import com.sample.parameter.PasswordChange;
 import com.sample.domain.User;
 import com.sample.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,13 +55,13 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public void changePassword(String oldPassword, String newPassword, String confirmationPassword) {
-        if (!newPassword.equals(confirmationPassword)) {
+    public void changePassword(PasswordChange passwordChange) {
+        if (!passwordChange.getNewPassword().equals(passwordChange.getConfirmationPassword())) {
             throw new IllegalArgumentException();
         }
 
-        String encodedNewPassword = passwordEncoder.encode(newPassword);
-        userDetailsManager.changePassword(oldPassword, encodedNewPassword);
+        String encodedNewPassword = passwordEncoder.encode(passwordChange.getNewPassword());
+        userDetailsManager.changePassword(passwordChange.getOldPassword(), encodedNewPassword);
     }
 
     @Transactional

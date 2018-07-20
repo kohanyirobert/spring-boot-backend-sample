@@ -1,6 +1,7 @@
 package com.sample.controller;
 
 import com.sample.domain.User;
+import com.sample.parameter.PasswordChange;
 import com.sample.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -38,11 +39,8 @@ public class UserController {
     }
 
     @PostMapping("/change-password")
-    public void changePassword(@RequestBody Map<String, String> map) {
-        String oldPassword = map.get("oldPassword");
-        String newPassword = map.get("newPassword");
-        String confirmationPassword = map.get("confirmationPassword");
-        userService.changePassword(oldPassword, newPassword, confirmationPassword);
+    public void changePassword(@RequestBody PasswordChange passwordChange) {
+        userService.changePassword(passwordChange);
     }
 
     @Secured("ROLE_ADMIN")
