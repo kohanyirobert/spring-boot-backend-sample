@@ -28,4 +28,8 @@ public class User implements Serializable {
     )
     @Column(name = "authority")
     private List<String> authorities;
+
+    @OneToMany
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private List<LuckyNumber> luckyNumbers;
 }

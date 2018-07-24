@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -22,9 +23,11 @@ import org.springframework.session.Session;
 import org.springframework.session.security.SpringSessionBackedSessionRegistry;
 
 import javax.sql.DataSource;
+import java.util.Random;
 
 @SpringBootApplication
 @EnableGlobalMethodSecurity(securedEnabled = true)
+@EnableScheduling
 public class Application extends WebSecurityConfigurerAdapter {
 
     // Allows authentication through the /auth endpoint using GET requests exclusively
@@ -93,5 +96,10 @@ public class Application extends WebSecurityConfigurerAdapter {
     @Bean
     SpringSessionBackedSessionRegistry<? extends Session> sessionRegistry(@Autowired FindByIndexNameSessionRepository<? extends Session> sessionRepository) {
         return new SpringSessionBackedSessionRegistry<>(sessionRepository);
+    }
+
+    @Bean
+    Random random() {
+        return new Random();
     }
 }
