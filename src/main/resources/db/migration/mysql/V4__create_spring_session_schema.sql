@@ -15,5 +15,5 @@ create table spring_session_attributes (
 	attribute_name varchar(200) not null,
 	attribute_bytes blob not null,
 	primary key (session_primary_id, attribute_name),
-	foreign key (session_primary_id) references spring_session(primary_id) on delete cascade
+	foreign key (session_primary_id) references spring_session (primary_id) on delete cascade
 );
