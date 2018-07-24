@@ -2,23 +2,25 @@
 <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 https://maven.apache.org/xsd/settings-1.0.0.xsd">
-    <profiles>
-        <profile>
-            <id>development</id>
-            <properties>
-                <flyway.user>root</flyway.user>
-                <flyway.password/>
-                <flyway.url>jdbc:mysql://localhost:3306/development</flyway.url>
-                <spring-boot.run.profiles>development,local</spring-boot.run.profiles>
-            </properties>
-        </profile>
-        <profile>
-            <id>test</id>
-            <properties>
-                <flyway.user>root</flyway.user>
-                <flyway.password/>
-                <flyway.url>jdbc:mysql://localhost:3306/test</flyway.url>
-            </properties>
-        </profile>
-    </profiles>
+<profiles>
+    <profile>
+        <id>development</id>
+        <properties>
+            <flyway.user>root</flyway.user>
+            <flyway.password/>
+            <flyway.url>jdbc:mysql://localhost:3306/development</flyway.url>
+            <flyway.locations>filesystem:src/main/resources/db/migration,filesystem:src/main/resources/development/db/migration</flyway.locations>
+            <spring-boot.run.profiles>development,local</spring-boot.run.profiles>
+        </properties>
+    </profile>
+    <profile>
+        <id>test</id>
+        <properties>
+            <flyway.user>root</flyway.user>
+            <flyway.password/>
+            <flyway.url>jdbc:mysql://localhost:3306/test</flyway.url>
+            <flyway.locations>filesystem:src/main/resources/db/migration,filesystem:src/test/resources/db/migration</flyway.locations>
+        </properties>
+    </profile>
+</profiles>
 </settings>
