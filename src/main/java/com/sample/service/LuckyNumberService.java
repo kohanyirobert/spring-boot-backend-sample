@@ -20,7 +20,7 @@ public class LuckyNumberService {
     @Autowired
     private UserRepository userRepository;
 
-    @Scheduled(fixedRate = 10000L)
+    @Scheduled(fixedRate = 3000L)
     void draw() {
         final int number = random.nextInt(10);
         messagingTemplate.convertAndSend("/topic/lucky-number", number);
