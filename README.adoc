@@ -7,6 +7,14 @@ Create two databases, *development* and *test*.
 The database must be running on `localhost:3306`.
 The database username is `root` the password is `''` (empty) by default.
 
+IMPORTANT: If possible https://www.eversql.com/mysql-utf8-vs-utf8mb4-whats-the-difference-between-utf8-and-utf8mb4/[use `utf8mb4`instead of `utf8` all the way].
+However *this project will only work with `utf8`* for now.
+
+IMPORTANT: https://github.com/spring-projects/spring-session/issues/637[Because of this problem] however the database server must be configured to https://mariadb.com/kb/en/library/xtradbinnodb-server-system-variables/#innodb_large_prefix[use large prefixes for InnoDB].
+
+IMPORTANT: In recent MySQL and MariaDB versions this is enabled by default.
+In older versions https://stackoverflow.com/a/43403017/433835[dynamic row format must be configured explicitly].
+
 Flyway:::
 Create or edit your Maven `settings.xml` (at `$HOME/.m2/settings.xml` or `%USERPROFILE%\.m2\settings.xml`) according to the `link:settings.sample.xml[]` in the root of this repository.
 

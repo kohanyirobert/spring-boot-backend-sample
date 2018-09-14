@@ -8,7 +8,7 @@
         <properties>
             <flyway.user>root</flyway.user>
             <flyway.password/>
-            <flyway.url>jdbc:mysql://localhost:3306/development</flyway.url>
+            <flyway.url>jdbc:mysql://localhost:3306/development?useUnicode=true&amp;characterEncoding=UTF-8</flyway.url>
             <flyway.locations>filesystem:src/main/resources/db/migration,filesystem:src/main/resources/development/db/migration</flyway.locations>
             <spring-boot.run.profiles>development,local</spring-boot.run.profiles>
         </properties>
@@ -18,7 +18,7 @@
         <properties>
             <flyway.user>root</flyway.user>
             <flyway.password/>
-            <flyway.url>jdbc:mysql://localhost:3306/test</flyway.url>
+            <flyway.url>jdbc:mysql://localhost:3306/test?useUnicode=true&amp;characterEncoding=UTF-8</flyway.url>
             <flyway.locations>filesystem:src/main/resources/db/migration,filesystem:src/test/resources/db/migration</flyway.locations>
         </properties>
     </profile>
