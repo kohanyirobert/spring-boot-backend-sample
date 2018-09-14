@@ -1,7 +1,7 @@
 package com.sample.service;
 
-import com.sample.parameter.PasswordChange;
 import com.sample.domain.User;
+import com.sample.parameter.PasswordChange;
 import com.sample.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;

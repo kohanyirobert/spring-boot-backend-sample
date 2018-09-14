@@ -1,6 +1,5 @@
 package com.sample.parameter;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
