@@ -2,6 +2,7 @@ create table users (
     id int auto_increment primary key,
     username varchar(50) not null unique,
     -- binary(60) is used because https://stackoverflow.com/a/16605381/433835
+    email varchar(100) unique,
     password binary(60) not null,
     enabled boolean not null
 );
