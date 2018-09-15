@@ -1,15 +1,18 @@
 package com.sample.service;
 
 import com.sample.domain.User;
+import com.sample.parameter.AddUser;
 import com.sample.parameter.PasswordChange;
+import com.sample.parameter.RegisterUser;
 import com.sample.repository.UserRepository;
+import com.sample.util.Role;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.Optional;
 
 @Service
@@ -35,7 +38,21 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
-    public User add(String username, String password, String confirmationPassword) {
+    public User add(RegisterUser registerUser) {
+        return add(Role.USER,
+            registerUser.getUsername(),
+            registerUser.getPassword(),
+            registerUser.getConfirmationPassword());
+    }
+
+    public User add(AddUser addUser) {
+        return add(addUser.getRole(),
+            addUser.getUsername(),
+            addUser.getPassword(),
+            addUser.getConfirmationPassword());
+    }
+
+    private User add(Role role, String username, String password, String confirmationPassword) {
         if (!password.equals(confirmationPassword)) {
             throw new IllegalArgumentException();
         }
@@ -43,7 +60,7 @@ public class UserService {
         userDetailsManager.createUser(new org.springframework.security.core.userdetails.User(
             username,
             passwordEncoder.encode(password),
-            AuthorityUtils.createAuthorityList("ROLE_USER")));
+            Collections.singletonList(role)));
         return userRepository.findByUsername(username).orElseThrow();
     }
 

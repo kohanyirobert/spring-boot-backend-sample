@@ -1,6 +1,7 @@
 package com.sample.controller;
 
 import com.sample.domain.User;
+import com.sample.parameter.AddUser;
 import com.sample.parameter.PasswordChange;
 import com.sample.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,11 +32,8 @@ public class UserController {
 
     @Secured("ROLE_ADMIN")
     @PostMapping("")
-    public User add(@RequestBody Map<String, String> map) {
-        String username = map.get("username");
-        String password = map.get("password");
-        String confirmationPassword = map.get("confirmationPassword");
-        return userService.add(username, password, confirmationPassword);
+    public User add(@RequestBody AddUser newUser) {
+        return userService.add(newUser);
     }
 
     @PostMapping("/change-password")
