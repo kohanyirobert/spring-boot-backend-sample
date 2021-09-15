@@ -3,16 +3,13 @@ package com.sample;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sample.domain.User;
 import com.sample.parameter.RegisterUser;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -27,7 +24,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ApplicationIT {
 
@@ -45,7 +41,7 @@ public class ApplicationIT {
      * previously made HTTP call.
      *
      * @param result the previously made HTTP call's result
-     * @return the {@code RequestPostProcessor} that can be fed to {@link MockHttpServletRequestBuilder#with(RequestPostProcessor)}}.
+     * @return the {@code RequestPostProcessor} that can be fed to {@link org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder#with(RequestPostProcessor)}}.
      */
     private static RequestPostProcessor previousState(MvcResult result) {
         return request -> {
@@ -67,7 +63,7 @@ public class ApplicationIT {
 
     private ObjectMapper om;
 
-    @Before
+    @BeforeEach
     public void setup() {
         mvc = MockMvcBuilders
             .webAppContextSetup(context)
@@ -104,7 +100,7 @@ public class ApplicationIT {
             .with(previousState(result)))
             .andExpect(authenticated())
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
     @Test
@@ -128,10 +124,10 @@ public class ApplicationIT {
 
         result = mvc.perform(post("/register")
             .with(previousState(result))
-            .contentType(MediaType.APPLICATION_JSON_UTF8)
+            .contentType(MediaType.APPLICATION_JSON)
             .content(om.writeValueAsBytes(new RegisterUser(UNICODE_STRING, UNICODE_STRING, UNICODE_STRING))))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andReturn();
 
         User user = om.readValue(result.getResponse().getContentAsString(), User.class);

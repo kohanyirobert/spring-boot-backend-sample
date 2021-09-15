@@ -2,17 +2,18 @@
 
 == Requirements
 
-MySQL:::
+MariaDB:::
 Create two databases, *development* and *test*.
 The database must be running on `localhost:3306`.
 The database username is `root` the password is `''` (empty) by default.
 
-IMPORTANT: If possible https://www.eversql.com/mysql-utf8-vs-utf8mb4-whats-the-difference-between-utf8-and-utf8mb4/[use `utf8mb4`instead of `utf8` all the way].
-However *this project will only work with `utf8`* for now.
+IMPORTANT: Use MariaDB 10.4.x or later to avoid issues mentioned below.
 
-IMPORTANT: https://github.com/spring-projects/spring-session/issues/637[Because of this problem] however the database server must be configured to https://mariadb.com/kb/en/library/xtradbinnodb-server-system-variables/#innodb_large_prefix[use large prefixes for InnoDB].
+IMPORTANT: https://www.eversql.com/mysql-utf8-vs-utf8mb4-whats-the-difference-between-utf8-and-utf8mb4/[Use `utf8mb4` instead of `utf8` all the way].
 
-IMPORTANT: In recent MySQL and MariaDB versions this is enabled by default.
+IMPORTANT: https://github.com/spring-projects/spring-session/issues/637[Because of this problem] the database server must be configured to https://mariadb.com/kb/en/library/xtradbinnodb-server-system-variables/#innodb_large_prefix[use large prefixes for InnoDB].
+
+IMPORTANT: In recent MariaDB versions (up from 10.2.x) this is enabled by default.
 In older versions https://stackoverflow.com/a/43403017/433835[dynamic row format must be configured explicitly].
 
 Flyway:::
